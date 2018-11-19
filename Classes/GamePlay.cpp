@@ -125,7 +125,7 @@ bool GamePlay::CheckCollision()
 
 		for (auto title : _listTitles)
 		{
-			if (checkColistion2Rect(sprite->getPosition(), title->getPosition(), sprite->boundingBox().size, title->boundingBox().size))
+			if (checkColistion2Rect(sprite->getPosition(), title->getPosition(), sprite->getBoundingBox().size, title->getBoundingBox().size))
 			{
 				for (auto x : _shapeFalling->_listTitles)
 				{
@@ -234,6 +234,20 @@ void GamePlay::onTouchRelease(Touch* touch, Event* event)
 			moveByPos = Vec2(-_sideTitle, 0);
 		}
 		
+		//check collistion with title near it
+		for (auto x : _shapeFalling->_listTitles)
+		{
+			for (auto title : _listTitles)
+			{
+				if (abs(title->getPositionX() - x->getPositionX()) == _sideTitle)
+				{
+					if (checkColistion2Rect(title->getPosition(), x->getPosition() + moveByPos, title->getBoundingBox().size, x->getBoundingBox().size))
+						return;
+				}
+			}
+		}
+
+		//end check
 
 		_shapeFalling->MoveBy(moveByPos, true);
 	}

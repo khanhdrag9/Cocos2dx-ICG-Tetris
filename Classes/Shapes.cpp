@@ -17,7 +17,9 @@ Shapes::~Shapes()
 {
 	for (auto x : _listTitles)
 		if (x)
+		{
 			CC_SAFE_DELETE(x);
+		}
 	_listTitles.clear();
 }
 

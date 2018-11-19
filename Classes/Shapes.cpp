@@ -49,6 +49,7 @@ void Shapes::setShape(float side, Changes* form)
 			auto posPreviousTitle = titlePrevious->getPosition();
 			
 			title->setPosition(posPreviousTitle + Vec2(sizePreviousTitle.width * ratioPos.x, sizePreviousTitle.width * ratioPos.y));
+			
 		}
 		else
 		{
@@ -61,7 +62,18 @@ void Shapes::setShape(float side, Changes* form)
 		//title->runAction(actionFall);
 		_listTitles.push_back(title);
 	}
+	_form = form;
 }
+
+
+void Shapes::Rotate(cocos2d::Layer* layer, int direction)
+{
+	if (_form)
+	{
+		
+	}
+}
+
 
 void Shapes::MoveBy(cocos2d::Vec2 pos, bool useAction)
 {
@@ -83,14 +95,6 @@ void Shapes::MoveBy(cocos2d::Vec2 pos, bool useAction)
 				x->setPosition(x->getPosition() + pos);
 			}
 		}
-	}
-}
-
-void Shapes::Rotate()
-{
-	for (auto x : _listTitles)
-	{
-
 	}
 }
 

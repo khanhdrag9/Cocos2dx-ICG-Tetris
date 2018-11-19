@@ -22,5 +22,6 @@ public:
 	
 	void Init(unsigned int type = 0);
 	std::vector<cocos2d::Vec2> _listRatioPos;
+	cocos2d::Vec2 _ratioRotate;
 };
 

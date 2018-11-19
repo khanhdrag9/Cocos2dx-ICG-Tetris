@@ -34,6 +34,8 @@ void Changes::Init(unsigned int type)
 			cocos2d::Vec2(1, 3),
 			cocos2d::Vec2(1, 4)
 		};
+
+		_ratioRotate = cocos2d::Vec2(1, -1);
 		break;
 	case TypeChanges::TRIANGLE:
 		_listRatioPos = {

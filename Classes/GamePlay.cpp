@@ -199,6 +199,7 @@ void GamePlay::createShapeFalling()
 	int type = rand() % 5;
 	CCLOG("type falling : %d", type);
 
+	type = 1;
 	_shapeFalling = new Shapes(_sideTitle, _listChanges[type]);
 
 	int ranX = rand() % (NUMBER_COLUMN - 3 - 4) + 4;
@@ -224,32 +225,47 @@ void GamePlay::onTouchRelease(Touch* touch, Event* event)
 	if (_shapeFalling)
 	{
 		auto posRelease = touch->getLocation();
-		Vec2 moveByPos;
-		if (posRelease.x > _touchBegin.x)
+		float subXOf2Pos = posRelease.x - _touchBegin.x;
+		if (abs(subXOf2Pos) > abs(posRelease.y - _touchBegin.y))
 		{
-			moveByPos = Vec2(_sideTitle, 0);
-		}
-		else if (posRelease.x < _touchBegin.x)
-		{
-			moveByPos = Vec2(-_sideTitle, 0);
-		}
-		
-		//check collistion with title near it
-		for (auto x : _shapeFalling->_listTitles)
-		{
-			for (auto title : _listTitles)
+			Vec2 moveByPos;
+			if (posRelease.x > _touchBegin.x)
 			{
-				if (abs(title->getPositionX() - x->getPositionX()) == _sideTitle)
+				moveByPos = Vec2(_sideTitle, 0);
+			}
+			else if (posRelease.x < _touchBegin.x)
+			{
+				moveByPos = Vec2(-_sideTitle, 0);
+			}
+
+			//check collistion with title near it
+			for (auto x : _shapeFalling->_listTitles)
+			{
+				for (auto title : _listTitles)
 				{
-					if (checkColistion2Rect(title->getPosition(), x->getPosition() + moveByPos, title->getBoundingBox().size, x->getBoundingBox().size))
-						return;
+					if (abs(title->getPositionX() - x->getPositionX()) == _sideTitle)
+					{
+						if (checkColistion2Rect(title->getPosition(), x->getPosition() + moveByPos, title->getBoundingBox().size, x->getBoundingBox().size))
+							return;
+					}
 				}
 			}
+
+			//end check
+
+			_shapeFalling->MoveBy(moveByPos, true);
 		}
-
-		//end check
-
-		_shapeFalling->MoveBy(moveByPos, true);
+		else
+		{
+			if (subXOf2Pos > 0)
+			{
+				_shapeFalling->Rotate(this, directionRotate::RIGHT);
+			}
+			else
+			{
+				_shapeFalling->Rotate(this, directionRotate::LEFT);
+			}
+		}
 	}
 }
 

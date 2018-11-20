@@ -18,7 +18,7 @@ void Changes::Init(unsigned int type)
 
 	switch (_type)
 	{
-	case TypeChanges::SQUARE:
+	case TypeChanges::O:
 		_listRatioPos = {
 			cocos2d::Vec2(1, 1),
 			cocos2d::Vec2(2, 1),
@@ -27,7 +27,7 @@ void Changes::Init(unsigned int type)
 		};
 
 		break;
-	case TypeChanges::LINE:
+	case TypeChanges::I:
 		_listRatioPos = {
 			cocos2d::Vec2(1, 1),
 			cocos2d::Vec2(1, 2),
@@ -37,7 +37,7 @@ void Changes::Init(unsigned int type)
 
 		_ratioRotate = cocos2d::Vec2(1, -1);
 		break;
-	case TypeChanges::TRIANGLE:
+	case TypeChanges::T:
 		_listRatioPos = {
 			cocos2d::Vec2(1, 1),
 			cocos2d::Vec2(2, 1),

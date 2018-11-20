@@ -4,9 +4,9 @@
 #include <vector>
 
 enum TypeChanges {
-	SQUARE = 1,
-	LINE,
-	TRIANGLE,
+	O = 1,
+	I,
+	T,
 	L,
 	Z
 };

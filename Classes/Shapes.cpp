@@ -27,11 +27,17 @@ void Shapes::setShape(float side, Changes* form)
 {
 	if (form == nullptr)
 	{
-		form = new Changes();
+		if(_form == nullptr)
+			_form = new Changes();
 	}
+	else
+	{
+		_form = form;
+	}
+
 	auto sz = cocos2d::Director::getInstance()->getVisibleSize();
 
-	for (int i = 0; i < form->_listRatioPos.size(); i++)
+	for (int i = 0; i < _form->_listRatioPos.size(); i++)
 	{
 		auto title = Sprite::create(TITLE_PATH);
 
@@ -40,31 +46,17 @@ void Shapes::setShape(float side, Changes* form)
 			auto ratioScale = side / (float)title->getBoundingBox().size.width;
 			title->setScale(ratioScale);
 		}
-		//title->setAnchorPoint(cocos2d::Vec2::ANCHOR_BOTTOM_LEFT);
-		if (i != 0)
-		{
-			auto titlePrevious = _listTitles[i - 1];
-			auto ratioPos = form->_listRatioPos[i] - form->_listRatioPos[i - 1];
-			auto sizePreviousTitle = titlePrevious->getBoundingBox().size;
-			auto posPreviousTitle = titlePrevious->getPosition();
-			
-			title->setPosition(posPreviousTitle + Vec2(sizePreviousTitle.width * ratioPos.x, sizePreviousTitle.width * ratioPos.y));
-			
-		}
-		else
-		{
-			int minX = title->getBoundingBox().size.width * 0.5f;
-			title->setPosition(minX, sz.height + title->getBoundingBox().size.height);
-		}
 		
-		//auto actionFall = MoveBy::create(SPEED_FALL, Vec2(0, -sz.height));
-		//actionFall->setTag(typeMoves::FALL);
-		//title->runAction(actionFall);
+		//add code create postion for each sprite
+
 		_listTitles.push_back(title);
 	}
-	_form = form;
 }
 
+void Shapes::Update(float dt)
+{
+	//code logic for shape
+}
 
 void Shapes::Rotate(cocos2d::Layer* layer, int direction)
 {
@@ -75,24 +67,15 @@ void Shapes::Rotate(cocos2d::Layer* layer, int direction)
 }
 
 
-void Shapes::MoveBy(cocos2d::Vec2 pos, bool useAction)
+void Shapes::MoveBy(const cocos2d::Vec2& pos)
 {
 	for (auto x : _listTitles)
 	{
 		if (x)
 		{
-			if (useAction)
+			if (!_isRunning)
 			{
-				if (x->getNumberOfRunningActionsByTag(typeMoves::TOSIDE) == 0)
-				{
-					auto action = MoveBy::create(SPEED_MOVE, pos);
-					x->runAction(action);
-					
-				}
-			}
-			else
-			{
-				x->setPosition(x->getPosition() + pos);
+				_target = pos;
 			}
 		}
 	}

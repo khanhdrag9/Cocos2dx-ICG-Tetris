@@ -27,9 +27,13 @@ public:
 
 	//action trans
 	void Rotate(cocos2d::Layer* layer, int direction = directionRotate::RIGHT);
-	void MoveBy(cocos2d::Vec2 pos, bool useAction = false);
+	void MoveBy(const cocos2d::Vec2& pos);
+
+	void Update(float dt);
 
 	std::vector<cocos2d::Sprite*> _listTitles;
 	Changes* _form = nullptr;
+	bool _isRunning = false;
+	cocos2d::Vec2 _target;
 };
 
